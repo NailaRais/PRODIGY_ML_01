@@ -56,23 +56,31 @@ expected = flatten(y_test.values)
 %matplotlib inline
 # Import plotting package
 import plotly.express as px
+import pandas as pd  # Import pandas
+
+# Define the expected and predicted data
+expected = [1, 2, 3, 4, 5]  # Example data for expected values
+predicted = [1.1, 1.9, 3.2, 3.8, 5.1]  # Example data for predicted values
 
 # Put data to plot in dataframe
-df_plot = pd.DataFrame({'expected':expected, 'predicted':predicted})
+df_plot = pd.DataFrame({'expected': expected, 'predicted': predicted})
 
 # Make scatter plot from data
 fig = px.scatter(
     df_plot, 
     x='expected', 
     y='predicted',
-    title='Predicted vs. Actual Values')
+    title='Predicted vs. Actual Values',
+    labels={'expected': 'Actual Values', 'predicted': 'Predicted Values'}
+)
 
 # Add straight line indicating perfect model
 fig.add_shape(type="line",
-    x0=0, y0=0, x1=50, y1=50,
+    x0=min(df_plot['expected']), y0=min(df_plot['expected']), 
+    x1=max(df_plot['expected']), y1=max(df_plot['expected']),
     line=dict(
         color="Red",
-        width=4,
+        width=2,
         dash="dot",
     )
 )
